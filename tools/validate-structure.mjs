@@ -9,6 +9,7 @@ const required = [
   "apps/web/package.json",
   "apps/bot/package.json",
   "packages/contracts/package.json",
+  "packages/db/package.json",
   "packages/studio-engine/package.json",
   "packages/design-tokens/package.json",
   "docs/roadmap/CHECKLIST.md",

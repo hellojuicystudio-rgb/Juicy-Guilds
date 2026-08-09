@@ -12,6 +12,7 @@ Este repositório começa como um monorepo, mas mantém **Web** e **Bot** desaco
 | `apps/bot` | Gateway do Discord, comandos, eventos e execução dos fluxos |
 | `packages/studio-engine` | Modelo, validação e compilação dos fluxos visuais |
 | `packages/contracts` | Contratos compartilhados entre Web, Bot e serviços futuros |
+| `packages/db` | Cliente Supabase tipado e exclusivo de processos server-side |
 | `packages/design-tokens` | Cores, tipografia, espaçamento e identidade visual |
 | `agents` | Contexto, regras, tarefas e handoffs para IDEs, CLIs e agentes |
 | `dependencias` | Registro e plano de adoção das bases open source |

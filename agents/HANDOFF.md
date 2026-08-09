@@ -2,8 +2,8 @@
 
 ## Entrega
 
-Supabase inicializado e vinculado ao projeto remoto, ambiente local completado,
-baseline SQL recuperada e repositório GitHub preparado para publicação.
+Supabase inicializado, banco remoto integrado ao código por cliente server-side
+tipado e dependências fixadas com lockfile.
 
 ## Alterado
 
@@ -19,10 +19,16 @@ baseline SQL recuperada e repositório GitHub preparado para publicação.
   `origin` configurado para `hellojuicystudio-rgb/Juicy-Guilds` via HTTPS autenticado.
 - Commit inicial publicado na branch `main` do repositório `Juicy-Guilds`;
   `.env` e metadados temporários Supabase permaneceram fora do Git.
+- `.Env_backup` corrigido para dotenv com `SUPABASE_DB_PASSWORD` e `DATABASE_URL`.
+- `DATABASE_URL` e senha Postgres importadas para o `.env` local com modo `600`.
+- `packages/db` criado com cliente Supabase server-side, health check, tipos das
+  cinco tabelas remotas e testes de configuração.
+- Dependências fixadas e `pnpm-lock.yaml` gerado para Supabase JS, TypeScript,
+  tipos Node e `tsx`.
 
 ## Validado
 
-- `node tools/validate-structure.mjs`: estrutura válida, 15 arquivos obrigatórios encontrados.
+- `node tools/validate-structure.mjs`: estrutura válida, incluindo `packages/db`.
 - `.env` confirmado com modo `600` e ignorado pelo Git.
 - A CLI está autenticada e tem acesso ao projeto Supabase configurado.
 - `supabase migration list --linked`: baseline local e remota alinhada; migration de segurança apenas local/pendente.
@@ -30,19 +36,25 @@ baseline SQL recuperada e repositório GitHub preparado para publicação.
 - Advisors detectaram duas advertências ligadas à mesma função `public.rls_auto_enable()`; a migration pendente trata ambas.
 - `git diff --cached --check` sem erros e varredura sem segredos nos arquivos versionáveis.
 - Branch local `main` alinhada a `origin/main` após o push inicial.
+- `pnpm check`: estrutura, typecheck e testes passaram.
+- `pnpm check:database`: Data API respondeu com sucesso usando o cliente server-side.
+- Consulta direta por `DATABASE_URL`: conexão confirmada com o Postgres remoto.
+- Discord API: os três tokens autenticam; Bot 1 está em duas guildas, Bots 2 e 3
+  não estão em nenhuma, portanto não existe guilda comum e nenhuma mensagem foi enviada.
 
 ## Riscos e pendências
 
-- `DATABASE_URL` continua vazia; a CLI conectou por credenciais próprias, mas aplicações precisam da connection string apropriada.
 - A migration remota referencia conceitos e caminhos ausentes neste repositório (`BotDefinition`, `packages/db`), sugerindo origem em outra base; revisar antes de adotá-la no domínio Juicy.
 - A migration de segurança ainda não foi aplicada remotamente com `supabase db push`.
 - GitHub CLI autenticada como `hellojuicystudio-rgb`; identidade local configurada
   como `JuicyStudio <Hello.Juicystudio@gmail.com>`.
 - A URL SSH original não pôde ser usada por ausência de chave autorizada; o remoto
   usa HTTPS autenticado pelo GitHub CLI.
+- A credencial do GitHub CLI expirou e o novo login por dispositivo aguarda
+  autorização antes do commit/push desta integração.
 - Fila, gestão de segredos de produção e aplicações executáveis continuam pendentes.
 
 ## Próximo passo recomendado
 
-Revisar a baseline SQL recuperada, aplicar a migration de segurança e prosseguir
-com a prova de conceito vertical após o primeiro commit/PR no Juicy-Guilds.
+Aplicar a migration de segurança pendente após confirmação e integrar
+`@juicy-guilds/db` aos primeiros serviços executáveis do Bot e do backend Web.

@@ -7,14 +7,16 @@
     "moduleResolution": "NodeNext",
     "target": "ES2022",
     "lib": ["ES2022", "DOM"],
+    "types": ["node"],
+    "allowImportingTsExtensions": true,
     "declaration": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
     "paths": {
-      "@juicy-guilds/contracts": ["packages/contracts/src/index.ts"],
-      "@juicy-guilds/studio-engine": ["packages/studio-engine/src/index.ts"],
-      "@juicy-guilds/design-tokens": ["packages/design-tokens/src/index.ts"]
+      "@juicy-guilds/contracts": ["./packages/contracts/src/index.ts"],
+      "@juicy-guilds/db": ["./packages/db/src/index.ts"],
+      "@juicy-guilds/studio-engine": ["./packages/studio-engine/src/index.ts"],
+      "@juicy-guilds/design-tokens": ["./packages/design-tokens/src/index.ts"]
     }
   }
 }

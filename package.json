@@ -7,7 +7,15 @@
     "node": ">=22"
   },
   "scripts": {
+    "check:database": "tsx --env-file=.env packages/db/src/check.ts",
+    "test": "pnpm --recursive test",
+    "typecheck": "tsc -p tsconfig.json",
     "validate:structure": "node tools/validate-structure.mjs",
-    "check": "pnpm validate:structure"
+    "check": "pnpm validate:structure && pnpm typecheck && pnpm test"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.1",
+    "tsx": "4.23.11",
+    "typescript": "7.0.2"
   }
 }
