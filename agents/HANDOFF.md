@@ -17,8 +17,8 @@ baseline SQL recuperada e repositório GitHub preparado para publicação.
 - Runbook e documentação de infraestrutura atualizados.
 - Repositório Git local isolado em `/home/jefferson/Juicy`, branch `main`, com
   `origin` configurado para `hellojuicystudio-rgb/Juicy-Guilds` via HTTPS autenticado.
-- Branch `agent/configure-supabase-foundation` preparada com 68 arquivos do projeto;
-  `.env` e metadados temporários Supabase permanecem fora do staging.
+- Commit inicial publicado na branch `main` do repositório `Juicy-Guilds`;
+  `.env` e metadados temporários Supabase permaneceram fora do Git.
 
 ## Validado
 
@@ -29,6 +29,7 @@ baseline SQL recuperada e repositório GitHub preparado para publicação.
 - SQL da migration de segurança validado remotamente dentro de transação com `ROLLBACK`.
 - Advisors detectaram duas advertências ligadas à mesma função `public.rls_auto_enable()`; a migration pendente trata ambas.
 - `git diff --cached --check` sem erros e varredura sem segredos nos arquivos versionáveis.
+- Branch local `main` alinhada a `origin/main` após o push inicial.
 
 ## Riscos e pendências
 
