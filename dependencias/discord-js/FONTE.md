@@ -6,6 +6,6 @@
 - **Licença:** Apache-2.0
 - **Função no Juicy Guilds:** cliente do Discord Gateway e REST API no `apps/bot`
 - **Forma de adoção:** pacote publicado, encapsulado por adaptadores do Bot
-- **Tag / versão adotada:** não definida
+- **Tag / versão adotada:** `14.27.0`
 - **Código copiado:** nenhum
-- **Estado:** selecionado; prova de conceito pendente
+- **Estado:** adotado no runtime Gateway da prova de conceito

@@ -5,10 +5,11 @@
 - **Repositório:** https://github.com/synergycodes/workflowbuilder
 - **Licença:** Apache-2.0 para a Community Edition
 - **Função no Juicy Guilds:** base do editor visual do Studio
-- **Forma de adoção preferida:** pacote `@workflowbuilder/sdk` e adaptador próprio
+- **Forma de adoção:** referência arquitetural; o SDK não foi instalado
 - **Tag / commit adotado:** não definido
 - **Código copiado:** nenhum
-- **Estado:** selecionado; prova de conceito pendente
+- **Estado:** não adotado no POC; sua superfície inclui editor de código, i18n e
+  formulários genéricos que não são necessários ao domínio Discord
 
 ## Limite de segurança
 

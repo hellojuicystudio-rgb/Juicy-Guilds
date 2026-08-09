@@ -9,6 +9,7 @@ const required = [
   "apps/web/package.json",
   "apps/bot/package.json",
   "packages/contracts/package.json",
+  "packages/db/package.json",
   "packages/studio-engine/package.json",
   "packages/design-tokens/package.json",
   "docs/roadmap/CHECKLIST.md",
@@ -16,6 +17,7 @@ const required = [
   "dependencias/next-generation/FONTE.md",
   "dependencias/workflow-builder/FONTE.md",
   "dependencias/discord-js/FONTE.md",
+  "dependencias/react-flow/FONTE.md",
 ];
 
 const sourceFields = ["Criador", "Nome do projeto", "Repositório"];

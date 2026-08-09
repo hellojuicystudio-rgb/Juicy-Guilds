@@ -7,6 +7,10 @@
 3. Vincule o projeto com `supabase link --project-ref <project-ref>`.
 4. Confira o alinhamento com `supabase migration list --linked`.
 
+Valide a conexão usada pela aplicação com `pnpm check:database`. O comando usa
+o cliente server-side de `packages/db`, consulta somente a contagem de projetos
+e nunca imprime chaves ou linhas privadas.
+
 ## Fluxo de alteração SQL
 
 1. Crie migrations com `supabase migration new <descricao>`.

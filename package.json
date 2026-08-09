@@ -7,7 +7,19 @@
     "node": ">=22"
   },
   "scripts": {
+    "check:database": "tsx --env-file=.env packages/db/src/check.ts",
+    "check:bot": "BOT_SMOKE_TEST=true pnpm --filter @juicy-guilds/bot start",
+    "build:web": "pnpm --filter @juicy-guilds/web build",
+    "dev:web": "pnpm --filter @juicy-guilds/web dev",
+    "start:bot": "pnpm --filter @juicy-guilds/bot start",
+    "test": "pnpm --recursive test",
+    "typecheck": "tsc -p tsconfig.json",
     "validate:structure": "node tools/validate-structure.mjs",
-    "check": "pnpm validate:structure"
+    "check": "pnpm validate:structure && pnpm typecheck && pnpm test"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.1",
+    "tsx": "4.23.11",
+    "typescript": "7.0.2"
   }
 }

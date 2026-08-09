@@ -1,5 +1,5 @@
 import type { WorkflowNodeKind } from "@juicy-guilds/contracts";
-import type { NodeDefinition } from "./model.js";
+import type { NodeDefinition } from "./model.ts";
 
 export class NodeRegistry {
   readonly #definitions = new Map<WorkflowNodeKind, NodeDefinition>();

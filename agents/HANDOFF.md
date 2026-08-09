@@ -1,48 +1,53 @@
 # Último handoff
 
-## Entrega
+## Tarefa executada
 
-Supabase inicializado e vinculado ao projeto remoto, ambiente local completado,
-baseline SQL recuperada e repositório GitHub preparado para publicação.
+Fluxo 1–6 do construtor visual: contratos dos oito nós, schema/serialização,
+catálogo e validação, componentes React, canvas, persistência, publicação e
+execução de Mensagem pelo Bot.
 
-## Alterado
+## Arquivos alterados
 
-- `.env` local atualizado com os três bots, Public Keys, Discord OAuth e Supabase; Bot 1 é o principal.
-- `.env.example` alinhado ao contrato de configuração sem valores reais.
-- Supabase CLI 2.110.0 inicializada e projeto remoto vinculado.
-- Configuração local do Discord Auth adicionada em `supabase/config.toml` com segredos via ambiente.
-- Migração remota `20260731120000_create-projects-and-templates.sql` recuperada do histórico.
-- Migration pendente `20260809171141_restrict_rls_auto_enable.sql` criada para remover execução pública de função `SECURITY DEFINER`.
-- ADR-0004 registra Supabase Postgres, Supabase Auth e migrations pela CLI.
-- Runbook e documentação de infraestrutura atualizados.
-- Repositório Git local isolado em `/home/jefferson/Juicy`, branch `main`, com
-  `origin` configurado para `hellojuicystudio-rgb/Juicy-Guilds` via HTTPS autenticado.
-- Commit inicial publicado na branch `main` do repositório `Juicy-Guilds`;
-  `.env` e metadados temporários Supabase permaneceram fora do Git.
+- `packages/contracts/src/workflow.ts`: documento versionado e configurações
+  discriminadas para Mensagem, Embed, Container, Botão, Select Menu, Modal,
+  Condição e Ação.
+- `packages/studio-engine`: defaults, campos, validação, parser, serializador,
+  detecção de ciclos e compilação topológica.
+- `apps/web/src/app/studio`: canvas React Flow, paleta, nós visuais, conexões,
+  inspector, seleção de canal, lista de projetos e ações Salvar/Publicar.
+- `apps/web/src/lib/studio-submission.ts`: validação server-side compartilhada.
+- Rotas `/studio/save` e `/studio/publish`: persistência RLS e criação de job.
+- React Flow 12.11.2 fixado no manifesto/lockfile e registrado em
+  `dependencias/react-flow/FONTE.md`.
+- ADR-0007 e documentação operacional atualizados.
 
-## Validado
+## Validações realizadas
 
-- `node tools/validate-structure.mjs`: estrutura válida, 15 arquivos obrigatórios encontrados.
-- `.env` confirmado com modo `600` e ignorado pelo Git.
-- A CLI está autenticada e tem acesso ao projeto Supabase configurado.
-- `supabase migration list --linked`: baseline local e remota alinhada; migration de segurança apenas local/pendente.
-- SQL da migration de segurança validado remotamente dentro de transação com `ROLLBACK`.
-- Advisors detectaram duas advertências ligadas à mesma função `public.rls_auto_enable()`; a migration pendente trata ambas.
-- `git diff --cached --check` sem erros e varredura sem segredos nos arquivos versionáveis.
-- Branch local `main` alinhada a `origin/main` após o push inicial.
+- `pnpm check`: estrutura, TypeScript e testes de DB, Engine, Web e Bot passam.
+- Testes cobrem os oito tipos, round-trip de serialização, configuração
+  obrigatória, ciclos, canal inválido e submissão compilável.
+- `pnpm build:web`: build de produção aprovado com dez rotas App Router.
+- `pnpm audit --prod`: nenhuma vulnerabilidade conhecida.
+- `/studio` sem sessão retorna 307 para login.
+- Execução real anterior do pipeline foi confirmada nos logs:
+  workflow concluído pelo Bot 1 com registro no banco.
+- `node tools/validate-structure.mjs`: 17 arquivos obrigatórios encontrados.
+- Build de produção e três Bots permanecem ativos para teste em localhost.
 
 ## Riscos e pendências
 
-- `DATABASE_URL` continua vazia; a CLI conectou por credenciais próprias, mas aplicações precisam da connection string apropriada.
-- A migration remota referencia conceitos e caminhos ausentes neste repositório (`BotDefinition`, `packages/db`), sugerindo origem em outra base; revisar antes de adotá-la no domínio Juicy.
-- A migration de segurança ainda não foi aplicada remotamente com `supabase db push`.
-- GitHub CLI autenticada como `hellojuicystudio-rgb`; identidade local configurada
-  como `JuicyStudio <Hello.Juicystudio@gmail.com>`.
-- A URL SSH original não pôde ser usada por ausência de chave autorizada; o remoto
-  usa HTTPS autenticado pelo GitHub CLI.
-- Fila, gestão de segredos de produção e aplicações executáveis continuam pendentes.
+- Somente nós `message` podem ser publicados; os outros sete já podem ser
+  criados, conectados, validados e salvos como rascunho.
+- O editor ainda não possui undo/redo, auto-layout, atalhos documentados,
+  colaboração ou preview Discord fiel.
+- Versionamento existe no contrato, mas histórico de versões e rollback ainda
+  pertencem ao MVP.
+- A fila ainda precisa de retry, timeout, idempotência e claim transacional para
+  escala horizontal.
+- O advisor Supabase mantém apenas o aviso de leaked-password protection, não
+  aplicável enquanto a autenticação for exclusivamente Discord OAuth.
 
 ## Próximo passo recomendado
 
-Revisar a baseline SQL recuperada, aplicar a migration de segurança e prosseguir
-com a prova de conceito vertical após o primeiro commit/PR no Juicy-Guilds.
+Validar interativamente Salvar/Publicar no Studio e implementar o runtime de
+Embed e componentes Discord, começando por preview fiel no painel lateral.
