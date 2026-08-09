@@ -1,61 +1,55 @@
 # Último handoff
 
-## Entrega
+## Tarefa executada
 
-Supabase inicializado, banco remoto integrado ao código por cliente server-side
-tipado e dependências fixadas com lockfile.
+Conclusão da parte executável da prova de conceito: dashboard Next.js, login
+Discord pelo Supabase Auth, listagem de guildas administradas, acesso tipado ao
+banco e runtime Gateway para três bots.
 
-## Alterado
+## Arquivos alterados
 
-- `.env` local atualizado com os três bots, Public Keys, Discord OAuth e Supabase; Bot 1 é o principal.
-- `.env.example` alinhado ao contrato de configuração sem valores reais.
-- Supabase CLI 2.110.0 inicializada e projeto remoto vinculado.
-- Configuração local do Discord Auth adicionada em `supabase/config.toml` com segredos via ambiente.
-- Migração remota `20260731120000_create-projects-and-templates.sql` recuperada do histórico.
-- Migration pendente `20260809171141_restrict_rls_auto_enable.sql` criada para remover execução pública de função `SECURITY DEFINER`.
-- ADR-0004 registra Supabase Postgres, Supabase Auth e migrations pela CLI.
-- Runbook e documentação de infraestrutura atualizados.
-- Repositório Git local isolado em `/home/jefferson/Juicy`, branch `main`, com
-  `origin` configurado para `hellojuicystudio-rgb/Juicy-Guilds` via HTTPS autenticado.
-- Commit inicial publicado na branch `main` do repositório `Juicy-Guilds`;
-  `.env` e metadados temporários Supabase permaneceram fora do Git.
-- `.Env_backup` corrigido para dotenv com `SUPABASE_DB_PASSWORD` e `DATABASE_URL`.
-- `DATABASE_URL` e senha Postgres importadas para o `.env` local com modo `600`.
-- `packages/db` criado com cliente Supabase server-side, health check, tipos das
-  cinco tabelas remotas e testes de configuração.
-- Dependências fixadas e `pnpm-lock.yaml` gerado para Supabase JS, TypeScript,
-  tipos Node e `tsx`.
+- `apps/web`: aplicação Next.js 16 com App Router, callback OAuth, logout,
+  dashboard protegido e clientes Supabase separados para browser e servidor.
+- `apps/bot`: configuração dos três tokens, runtime discord.js e smoke test do
+  Gateway integrado ao banco.
+- `packages/db`: imports TypeScript compatíveis com consumo direto no workspace.
+- `.env.example`, manifestos e `pnpm-lock.yaml`: contrato público e dependências
+  fixadas; o `.env` real continua local, ignorado e fora do Git.
+- `docs/decisoes/ADR-0005-runtimes-web-e-bot.md`: decisão dos runtimes Web/Bot.
+- `agents/TASKS.md`, `docs/roadmap/CHECKLIST.md` e fonte do discord.js:
+  progresso e versão adotada atualizados.
+- `supabase/migrations/20260809171141_restrict_rls_auto_enable.sql`: aplicada
+  ao projeto remoto para revogar execução pública de função privilegiada.
 
-## Validado
+## Validações realizadas
 
-- `node tools/validate-structure.mjs`: estrutura válida, incluindo `packages/db`.
-- `.env` confirmado com modo `600` e ignorado pelo Git.
-- A CLI está autenticada e tem acesso ao projeto Supabase configurado.
-- `supabase migration list --linked`: baseline local e remota alinhada; migration de segurança apenas local/pendente.
-- SQL da migration de segurança validado remotamente dentro de transação com `ROLLBACK`.
-- Advisors detectaram duas advertências ligadas à mesma função `public.rls_auto_enable()`; a migration pendente trata ambas.
-- `git diff --cached --check` sem erros e varredura sem segredos nos arquivos versionáveis.
-- Branch local `main` alinhada a `origin/main` após o push inicial.
-- `pnpm check`: estrutura, typecheck e testes passaram.
-- `pnpm check:database`: Data API respondeu com sucesso usando o cliente server-side.
-- Consulta direta por `DATABASE_URL`: conexão confirmada com o Postgres remoto.
-- Discord API: os três tokens autenticam e compartilham uma guilda. Cada bot
-  enviou uma mensagem `Hello Juicy` no mesmo canal com permissões validadas.
+- `pnpm check`: estrutura, TypeScript e testes de DB/Bot aprovados.
+- `pnpm build:web`: build de produção Next.js concluído, incluindo todas as
+  rotas estáticas e dinâmicas.
+- Smoke HTTP: `/` respondeu 200; `/dashboard` anônimo redirecionou; callback sem
+  código e com destino externo foi redirecionado para erro local seguro.
+- Supabase Auth hospedado: autorização Discord respondeu 302.
+- `pnpm check:bot`: Supabase conectado e os três bots autenticados pelo Gateway;
+  Bot 1 viu duas guildas e Bots 2/3 viram uma guilda cada.
+- `supabase migration list --linked`: as duas migrations estão alinhadas local e
+  remotamente.
+- `supabase db advisors --linked --type security --level warn`: nenhum alerta.
+- `node tools/validate-structure.mjs`: estrutura válida.
 
 ## Riscos e pendências
 
-- A migration remota referencia conceitos e caminhos ausentes neste repositório (`BotDefinition`, `packages/db`), sugerindo origem em outra base; revisar antes de adotá-la no domínio Juicy.
-- A migration de segurança ainda não foi aplicada remotamente com `supabase db push`.
-- GitHub CLI autenticada como `hellojuicystudio-rgb`; identidade local configurada
-  como `JuicyStudio <Hello.Juicystudio@gmail.com>`.
-- A URL SSH original não pôde ser usada por ausência de chave autorizada; o remoto
-  usa HTTPS autenticado pelo GitHub CLI.
-- GitHub CLI reautenticada; commit `integrate existing Supabase database`
-  publicado na branch `agent/integrate-supabase-database`.
-- Draft PR #1 aberto contra `main` com as validações e pendências registradas.
-- Fila, gestão de segredos de produção e aplicações executáveis continuam pendentes.
+- O login está implementado e o provedor responde, mas o fluxo interativo em
+  navegador depende de um usuário concluir o consentimento do Discord.
+- A dashboard lista guildas gerenciáveis, mas seleção persistida e autorização
+  por guilda pertencem à próxima etapa.
+- O runtime executa passos de mensagem, porém publicação, fila, retry,
+  idempotência e carregamento de workflows persistidos ainda não existem.
+- Segredos de produção devem migrar do `.env` local para um cofre no ambiente de
+  deploy antes da publicação.
+- A CLI não atualizou seu cache de catálogo após o push porque Docker não está
+  instalado; a migration remota e o advisor foram verificados separadamente.
 
 ## Próximo passo recomendado
 
-Aplicar a migration de segurança pendente após confirmação e integrar
-`@juicy-guilds/db` aos primeiros serviços executáveis do Bot e do backend Web.
+Implementar seleção persistida de guilda e o primeiro fluxo vertical completo:
+salvar, publicar e executar um workflow `message`, com autorização, fila e log.

@@ -16,3 +16,9 @@ Runtime operacional conectado ao Discord.
 - componentes React;
 - edição do workflow;
 - implementação duplicada dos contratos compartilhados.
+
+## Execução
+
+- `pnpm start:bot`: conecta todos os tokens `DISCORD_BOT_<n>_TOKEN` ao Gateway.
+- `pnpm check:bot`: conecta os bots, valida o Supabase e encerra após o smoke test.
+- O runtime concreto executa passos `message` já compilados pelo Studio Engine.

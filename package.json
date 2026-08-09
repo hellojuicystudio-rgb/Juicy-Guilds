@@ -8,6 +8,10 @@
   },
   "scripts": {
     "check:database": "tsx --env-file=.env packages/db/src/check.ts",
+    "check:bot": "BOT_SMOKE_TEST=true pnpm --filter @juicy-guilds/bot start",
+    "build:web": "pnpm --filter @juicy-guilds/web build",
+    "dev:web": "pnpm --filter @juicy-guilds/web dev",
+    "start:bot": "pnpm --filter @juicy-guilds/bot start",
     "test": "pnpm --recursive test",
     "typecheck": "tsc -p tsconfig.json",
     "validate:structure": "node tools/validate-structure.mjs",

@@ -2,7 +2,14 @@
   "name": "@juicy-guilds/bot",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx --env-file=../../.env src/index.ts",
+    "test": "node --experimental-strip-types --test test/*.test.ts"
+  },
   "dependencies": {
-    "@juicy-guilds/db": "workspace:*"
+    "@juicy-guilds/db": "workspace:*",
+    "@juicy-guilds/studio-engine": "workspace:*",
+    "discord.js": "14.27.0"
   }
 }

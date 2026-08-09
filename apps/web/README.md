@@ -15,3 +15,9 @@ Dashboard administrativo e Studio visual.
 - token do Bot;
 - conexão direta com Discord Gateway;
 - semântica central de validação e execução do grafo.
+
+## Execução
+
+- `pnpm dev:web`: inicia o dashboard Next.js usando o `.env` da raiz.
+- Login Discord usa Supabase Auth com PKCE e cookies server-side.
+- `/dashboard` valida o usuário, lista guildas administradas e consulta o banco.

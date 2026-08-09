@@ -1,7 +1,7 @@
 import {
   checkDatabaseConnection,
   createServerDatabaseClient,
-} from "./index.js";
+} from "./index.ts";
 
 const client = createServerDatabaseClient(process.env);
 const health = await checkDatabaseConnection(client);

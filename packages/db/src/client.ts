@@ -1,10 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
 
-import type { Database } from "./database.types.js";
+import type { Database } from "./database.types.ts";
 import {
   readServerDatabaseConfig,
   type DatabaseEnvironment,
-} from "./config.js";
+} from "./config.ts";
 
 export function createServerDatabaseClient(environment: DatabaseEnvironment) {
   const { secretKey, url } = readServerDatabaseConfig(environment);
