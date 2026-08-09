@@ -1,0 +1,13 @@
+{
+  "name": "juicy-guilds",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.34.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "validate:structure": "node tools/validate-structure.mjs",
+    "check": "pnpm validate:structure"
+  }
+}

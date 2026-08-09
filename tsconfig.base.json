@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "declaration": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@juicy-guilds/contracts": ["packages/contracts/src/index.ts"],
+      "@juicy-guilds/studio-engine": ["packages/studio-engine/src/index.ts"],
+      "@juicy-guilds/design-tokens": ["packages/design-tokens/src/index.ts"]
+    }
+  }
+}
