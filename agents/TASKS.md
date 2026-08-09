@@ -16,9 +16,9 @@
 - [x] Subir dashboard mínimo.
 - [x] Conectar login do Discord.
 - [x] Listar guildas administradas pelo usuário.
-- [ ] Renderizar os oito tipos de nó no Studio.
-- [ ] Serializar, validar e salvar um workflow.
-- [ ] Executar um workflow simples no Bot.
+- [x] Renderizar os oito tipos de nó no Studio.
+- [x] Serializar, validar e salvar um workflow.
+- [x] Executar um workflow simples no Bot.
 
 ## Depois — MVP
 

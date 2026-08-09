@@ -3,6 +3,7 @@ import {
   createServerDatabaseClient,
 } from "@juicy-guilds/db";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 import { listManagedDiscordGuilds } from "../../lib/discord";
 import { createServerSupabaseClient } from "../../lib/supabase/server";
@@ -39,6 +40,7 @@ export default async function DashboardPage() {
         </form>
       </div>
       <p className="status">Supabase conectado · {health.count} projetos</p>
+      {selectedGuild ? <Link className="button" href="/studio">Abrir Studio visual</Link> : null}
 
       <section className="grid">
         {guilds.map((guild) => (

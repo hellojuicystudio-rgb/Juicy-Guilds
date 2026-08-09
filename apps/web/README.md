@@ -25,3 +25,7 @@ Dashboard administrativo e Studio visual.
 - O formulário inicial publica um workflow `message` e o coloca na fila do Bot.
 - O canal é escolhido em um dropdown com apenas canais sincronizados em que ao
   menos um Bot possui permissão de visualização e envio.
+- `/studio` oferece paleta dos oito nós, canvas React Flow, conexões, painel de
+  propriedades e ações de salvar/carregar/publicar.
+- Todos os nós podem ser persistidos como rascunho; a publicação operacional
+  permanece limitada a `Mensagem` até os demais adaptadores Discord existirem.

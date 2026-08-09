@@ -1,4 +1,4 @@
-import type { WorkflowDocument } from "@juicy-guilds/contracts";
+import { CURRENT_WORKFLOW_SCHEMA_VERSION, type WorkflowDocument } from "@juicy-guilds/contracts";
 import { compileWorkflow, coreNodeDefinitions, NodeRegistry } from "@juicy-guilds/studio-engine";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -46,6 +46,7 @@ export async function POST(request: NextRequest) {
   const now = new Date().toISOString();
   const projectId = crypto.randomUUID();
   const definition: WorkflowDocument = {
+    schemaVersion: CURRENT_WORKFLOW_SCHEMA_VERSION,
     id: projectId,
     version: 1,
     guildId,

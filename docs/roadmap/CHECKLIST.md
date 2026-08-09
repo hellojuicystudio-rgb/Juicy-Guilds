@@ -15,8 +15,8 @@
 
 - [x] Banco e estratégia de migrations.
 - [x] Autenticação e sessão do Discord.
-- [ ] Comunicação Web/Bot.
-- [ ] Filas e tarefas agendadas.
+- [x] Comunicação Web/Bot.
+- [x] Filas e tarefas agendadas.
 - [ ] Armazenamento de segredos.
 - [ ] Observabilidade.
 - [ ] Ambientes local, preview e produção.
@@ -25,12 +25,12 @@
 
 - [x] Login do Discord.
 - [x] Seleção de guilda.
-- [ ] Canvas com oito tipos de nó.
-- [ ] Salvar e carregar workflow.
-- [ ] Validar grafo.
-- [ ] Publicar uma versão.
-- [ ] Executar Mensagem no Bot.
-- [ ] Registrar resultado.
+- [x] Canvas com oito tipos de nó.
+- [x] Salvar e carregar workflow.
+- [x] Validar grafo.
+- [x] Publicar uma versão.
+- [x] Executar Mensagem no Bot.
+- [x] Registrar resultado.
 
 ## Estágio 3 — MVP interno
 

@@ -5,7 +5,7 @@ const config: NextConfig = {
     cpus: 1,
     webpackBuildWorker: false,
   },
-  transpilePackages: ["@juicy-guilds/db"],
+  transpilePackages: ["@juicy-guilds/contracts", "@juicy-guilds/db", "@juicy-guilds/studio-engine"],
 };
 
 export default config;

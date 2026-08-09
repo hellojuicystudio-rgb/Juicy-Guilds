@@ -17,6 +17,7 @@ const required = [
   "dependencias/next-generation/FONTE.md",
   "dependencias/workflow-builder/FONTE.md",
   "dependencias/discord-js/FONTE.md",
+  "dependencias/react-flow/FONTE.md",
 ];
 
 const sourceFields = ["Criador", "Nome do projeto", "Repositório"];
