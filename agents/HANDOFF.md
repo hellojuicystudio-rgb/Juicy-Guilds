@@ -50,8 +50,9 @@ tipado e dependências fixadas com lockfile.
   como `JuicyStudio <Hello.Juicystudio@gmail.com>`.
 - A URL SSH original não pôde ser usada por ausência de chave autorizada; o remoto
   usa HTTPS autenticado pelo GitHub CLI.
-- A credencial do GitHub CLI expirou e o novo login por dispositivo aguarda
-  autorização antes do commit/push desta integração.
+- GitHub CLI reautenticada; commit `integrate existing Supabase database`
+  publicado na branch `agent/integrate-supabase-database`.
+- Draft PR #1 aberto contra `main` com as validações e pendências registradas.
 - Fila, gestão de segredos de produção e aplicações executáveis continuam pendentes.
 
 ## Próximo passo recomendado
