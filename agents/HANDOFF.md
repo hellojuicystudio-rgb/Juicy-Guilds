@@ -39,8 +39,8 @@ tipado e dependências fixadas com lockfile.
 - `pnpm check`: estrutura, typecheck e testes passaram.
 - `pnpm check:database`: Data API respondeu com sucesso usando o cliente server-side.
 - Consulta direta por `DATABASE_URL`: conexão confirmada com o Postgres remoto.
-- Discord API: os três tokens autenticam; Bot 1 está em duas guildas, Bots 2 e 3
-  não estão em nenhuma, portanto não existe guilda comum e nenhuma mensagem foi enviada.
+- Discord API: os três tokens autenticam e compartilham uma guilda. Cada bot
+  enviou uma mensagem `Hello Juicy` no mesmo canal com permissões validadas.
 
 ## Riscos e pendências
 
