@@ -5,6 +5,7 @@ import {
 import { Client, Events, GatewayIntentBits } from "discord.js";
 
 import { readBotCredentials } from "./config.js";
+import { syncGuildChannels } from "./guild-channels.js";
 import { processPendingJob } from "./workflow-queue.js";
 
 const credentials = readBotCredentials(process.env);
@@ -26,6 +27,7 @@ const clients = credentials.map(({ label, token }) => {
 
 await Promise.all(clients.map(({ client, token }) => client.login(token)));
 await Promise.all(clients.map(({ ready }) => ready));
+await syncGuildChannels(database, clients);
 
 if (process.env.BOT_SMOKE_TEST === "true") {
   for (const { client } of clients) client.destroy();

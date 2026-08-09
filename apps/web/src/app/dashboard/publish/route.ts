@@ -33,6 +33,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard?error=guild-not-authorized", request.url), 303);
   }
 
+  const { data: channel } = await supabase
+    .from("guild_channels")
+    .select("channel_id")
+    .eq("guild_id", guildId)
+    .eq("channel_id", channelId)
+    .maybeSingle();
+  if (!channel) {
+    return NextResponse.redirect(new URL("/dashboard?error=channel-not-available", request.url), 303);
+  }
+
   const now = new Date().toISOString();
   const projectId = crypto.randomUUID();
   const definition: WorkflowDocument = {

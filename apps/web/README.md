@@ -23,3 +23,5 @@ Dashboard administrativo e Studio visual.
 - `/dashboard` valida o usuário, lista guildas administradas e consulta o banco.
 - O callback sincroniza guildas administráveis; a seleção fica persistida por usuário.
 - O formulário inicial publica um workflow `message` e o coloca na fila do Bot.
+- O canal é escolhido em um dropdown com apenas canais sincronizados em que ao
+  menos um Bot possui permissão de visualização e envio.

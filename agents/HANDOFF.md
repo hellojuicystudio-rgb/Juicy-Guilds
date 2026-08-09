@@ -2,12 +2,21 @@
 
 ## Tarefa executada
 
-Implementação do primeiro pipeline vertical Web → Postgres → Bot: sincronização
-e seleção persistida de guilda, publicação de workflow `message`, fila durável,
-execução pelo Discord Gateway e auditoria do resultado.
+Correção do OAuth Discord e substituição do ID manual por dropdown seguro de
+canais graváveis, sincronizados pelos Bots e protegidos por RLS.
 
 ## Arquivos alterados
 
+- `supabase/config.toml`: callback sem override local, allow-list de localhost e
+  configuração local alinhada ao estado hospedado.
+- `apps/web/src/app/auth/callback/route.ts` e `page.tsx`: erro do provedor agora
+  é distinguido de callback sem código e exibido ao usuário.
+- `supabase/migrations/20260809210559_add_guild_channels.sql`: catálogo de
+  canais, RLS por membership e grants mínimos.
+- `apps/bot/src/guild-channels.ts`: união dos canais em que ao menos um Bot tem
+  `VIEW_CHANNEL` e permissão de envio.
+- Dashboard e publicação: dropdown de canal e validação server-side contra o
+  catálogo autorizado.
 - `supabase/migrations/20260809203408_add_workflow_execution_pipeline.sql`:
   memberships, preferências, campos de publicação, jobs, logs, grants e RLS.
 - `packages/db/src/database.types.ts`: tipos regenerados do schema remoto.
@@ -19,6 +28,14 @@ execução pelo Discord Gateway e auditoria do resultado.
 
 ## Validações realizadas
 
+- `supabase config push`: Auth atualizado; Client Secret hospedado passou a ter
+  o mesmo fingerprint da credencial local; Storage ficou sem alterações.
+- OAuth real concluído: callback recebeu código, sessão foi criada, dashboard
+  abriu e a guilda foi selecionada.
+- Quatro migrations alinhadas; 6 canais sincronizados em 2 guildas.
+- `guild_channels` respondeu HTTP 401 para chave pública sem sessão.
+- Advisors: desempenho sem alertas; segurança somente alerta de proteção de
+  senha vazada, não aplicável ao login exclusivamente por Discord.
 - Migration aplicada e três versões alinhadas local/remotamente.
 - Advisors Supabase de segurança e desempenho: nenhum alerta.
 - Data API anônima recebeu HTTP 401 nas quatro tabelas novas.
@@ -44,5 +61,5 @@ execução pelo Discord Gateway e auditoria do resultado.
 
 ## Próximo passo recomendado
 
-Concluir o OAuth pelo navegador e executar um job real pelo novo formulário;
-depois iniciar o Studio visual com os oito tipos de nó.
+Escolher um canal no dropdown e executar o primeiro job real; depois iniciar o
+Studio visual com os oito tipos de nó.

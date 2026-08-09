@@ -15,12 +15,15 @@ export default async function DashboardPage() {
   const { data: sessionData } = await supabase.auth.getSession();
   const providerToken = sessionData.session?.provider_token;
   const guilds = providerToken ? await listManagedDiscordGuilds(providerToken) : [];
-  const [{ data: settings }, { data: jobs }, { data: logs }] = await Promise.all([
-    supabase.from("user_settings").select("selected_guild_id").maybeSingle(),
+  const { data: settings } = await supabase.from("user_settings").select("selected_guild_id").maybeSingle();
+  const selectedGuild = guilds.find((guild) => guild.id === settings?.selected_guild_id);
+  const [{ data: channels }, { data: jobs }, { data: logs }] = await Promise.all([
+    selectedGuild
+      ? supabase.from("guild_channels").select("channel_id,channel_name,parent_name").eq("guild_id", selectedGuild.id).order("parent_name").order("position").order("channel_name")
+      : Promise.resolve({ data: [] }),
     supabase.from("workflow_jobs").select("id,status,created_at,last_error").order("created_at", { ascending: false }).limit(5),
     supabase.from("execution_logs").select("id,status,created_at,error").order("created_at", { ascending: false }).limit(5),
   ]);
-  const selectedGuild = guilds.find((guild) => guild.id === settings?.selected_guild_id);
   const database = createServerDatabaseClient(process.env);
   const health = await checkDatabaseConnection(database);
 
@@ -62,9 +65,19 @@ export default async function DashboardPage() {
           <form action="/dashboard/publish" className="form" method="post">
             <input name="guildId" type="hidden" value={selectedGuild.id} />
             <label>Nome<input maxLength={80} minLength={2} name="name" required /></label>
-            <label>ID do canal<input inputMode="numeric" name="channelId" pattern="[0-9]{16,22}" required /></label>
+            <label>Canal
+              <select defaultValue="" name="channelId" required>
+                <option disabled value="">Selecione um canal</option>
+                {channels?.map((channel) => (
+                  <option key={channel.channel_id} value={channel.channel_id}>
+                    {channel.parent_name ? `${channel.parent_name} / ` : "# "}{channel.channel_name}
+                  </option>
+                ))}
+              </select>
+            </label>
             <label>Mensagem<textarea maxLength={2000} name="content" required rows={4} /></label>
-            <button className="button" type="submit">Publicar e executar em {selectedGuild.name}</button>
+            <button className="button" disabled={!channels?.length} type="submit">Publicar e executar em {selectedGuild.name}</button>
+            {!channels?.length ? <p className="error">Nenhum canal gravável sincronizado. Reinicie o Bot e atualize a página.</p> : null}
           </form>
         ) : <p>Selecione uma guilda para criar o workflow.</p>}
       </section>

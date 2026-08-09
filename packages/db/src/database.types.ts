@@ -89,6 +89,39 @@ export type Database = {
           },
         ]
       }
+      guild_channels: {
+        Row: {
+          bot_user_ids: Json
+          channel_id: string
+          channel_name: string
+          channel_type: number
+          guild_id: string
+          parent_name: string | null
+          position: number
+          synced_at: string
+        }
+        Insert: {
+          bot_user_ids?: Json
+          channel_id: string
+          channel_name: string
+          channel_type: number
+          guild_id: string
+          parent_name?: string | null
+          position?: number
+          synced_at?: string
+        }
+        Update: {
+          bot_user_ids?: Json
+          channel_id?: string
+          channel_name?: string
+          channel_type?: number
+          guild_id?: string
+          parent_name?: string | null
+          position?: number
+          synced_at?: string
+        }
+        Relationships: []
+      }
       guild_memberships: {
         Row: {
           auth_user_id: string

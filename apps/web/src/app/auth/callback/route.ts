@@ -5,6 +5,7 @@ import { syncGuildMemberships } from "../../../lib/guild-memberships";
 import { createServerSupabaseClient } from "../../../lib/supabase/server";
 
 export async function GET(request: NextRequest) {
+  const providerError = request.nextUrl.searchParams.get("error");
   const code = request.nextUrl.searchParams.get("code");
   const requestedNext = request.nextUrl.searchParams.get("next");
   const next =
@@ -12,6 +13,7 @@ export async function GET(request: NextRequest) {
       ? requestedNext
       : "/dashboard";
 
+  if (providerError) return NextResponse.redirect(new URL("/?auth=provider-error", request.url));
   if (!code) return NextResponse.redirect(new URL("/?auth=missing-code", request.url));
 
   const supabase = await createServerSupabaseClient();
