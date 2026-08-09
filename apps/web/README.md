@@ -21,3 +21,5 @@ Dashboard administrativo e Studio visual.
 - `pnpm dev:web`: inicia o dashboard Next.js usando o `.env` da raiz.
 - Login Discord usa Supabase Auth com PKCE e cookies server-side.
 - `/dashboard` valida o usuário, lista guildas administradas e consulta o banco.
+- O callback sincroniza guildas administráveis; a seleção fica persistida por usuário.
+- O formulário inicial publica um workflow `message` e o coloca na fila do Bot.

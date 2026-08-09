@@ -29,3 +29,8 @@ export async function listManagedDiscordGuilds(providerToken: string) {
     );
   });
 }
+
+export async function canManageDiscordGuild(providerToken: string, guildId: string) {
+  const guilds = await listManagedDiscordGuilds(providerToken);
+  return guilds.some((guild) => guild.id === guildId);
+}

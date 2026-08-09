@@ -1,5 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+import { listManagedDiscordGuilds } from "../../../lib/discord";
+import { syncGuildMemberships } from "../../../lib/guild-memberships";
 import { createServerSupabaseClient } from "../../../lib/supabase/server";
 
 export async function GET(request: NextRequest) {
@@ -13,8 +15,14 @@ export async function GET(request: NextRequest) {
   if (!code) return NextResponse.redirect(new URL("/?auth=missing-code", request.url));
 
   const supabase = await createServerSupabaseClient();
-  const { error } = await supabase.auth.exchangeCodeForSession(code);
+  const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error) return NextResponse.redirect(new URL("/?auth=failed", request.url));
+
+  const providerToken = data.session.provider_token;
+  if (providerToken) {
+    const guilds = await listManagedDiscordGuilds(providerToken);
+    await syncGuildMemberships(data.user.id, guilds);
+  }
   return NextResponse.redirect(new URL(next, request.url));
 }

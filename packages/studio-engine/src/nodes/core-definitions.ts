@@ -1,5 +1,5 @@
 import type { WorkflowNodeKind } from "@juicy-guilds/contracts";
-import type { NodeCategory, NodeDefinition } from "../model.js";
+import type { NodeCategory, NodeDefinition } from "../model.ts";
 
 const catalog: ReadonlyArray<{
   kind: WorkflowNodeKind;
@@ -20,8 +20,12 @@ const catalog: ReadonlyArray<{
 export const coreNodeDefinitions: NodeDefinition[] = catalog.map((item) => ({
   ...item,
   validate(node) {
-    return node.kind === item.kind
-      ? []
-      : [`Esperado nó ${item.kind}, recebido ${node.kind}`];
+    if (node.kind !== item.kind) return [`Esperado nó ${item.kind}, recebido ${node.kind}`];
+    if (item.kind === "message") {
+      const content = node.config.content;
+      if (typeof content !== "string" || content.trim().length === 0) return ["Mensagem vazia"];
+      if (content.length > 2000) return ["Mensagem excede 2000 caracteres"];
+    }
+    return [];
   },
 }));

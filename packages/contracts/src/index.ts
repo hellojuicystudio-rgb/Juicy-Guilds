@@ -1,1 +1,1 @@
-export * from "./workflow.js";
+export * from "./workflow.ts";

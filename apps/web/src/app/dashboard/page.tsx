@@ -15,6 +15,12 @@ export default async function DashboardPage() {
   const { data: sessionData } = await supabase.auth.getSession();
   const providerToken = sessionData.session?.provider_token;
   const guilds = providerToken ? await listManagedDiscordGuilds(providerToken) : [];
+  const [{ data: settings }, { data: jobs }, { data: logs }] = await Promise.all([
+    supabase.from("user_settings").select("selected_guild_id").maybeSingle(),
+    supabase.from("workflow_jobs").select("id,status,created_at,last_error").order("created_at", { ascending: false }).limit(5),
+    supabase.from("execution_logs").select("id,status,created_at,error").order("created_at", { ascending: false }).limit(5),
+  ]);
+  const selectedGuild = guilds.find((guild) => guild.id === settings?.selected_guild_id);
   const database = createServerDatabaseClient(process.env);
   const health = await checkDatabaseConnection(database);
 
@@ -30,16 +36,52 @@ export default async function DashboardPage() {
         </form>
       </div>
       <p className="status">Supabase conectado · {health.count} projetos</p>
+
       <section className="grid">
         {guilds.map((guild) => (
-          <article className="card" key={guild.id}>
+          <article className={`card ${guild.id === selectedGuild?.id ? "selected" : ""}`} key={guild.id}>
             <strong>{guild.name}</strong>
             <p>{guild.owner ? "Proprietário" : "Pode gerenciar"}</p>
+            <form action="/dashboard/select" method="post">
+              <input name="guildId" type="hidden" value={guild.id} />
+              <button className="button compact" type="submit">
+                {guild.id === selectedGuild?.id ? "Selecionada" : "Selecionar"}
+              </button>
+            </form>
           </article>
         ))}
         {guilds.length === 0 ? (
           <article className="card"><strong>Nenhuma guilda disponível</strong><p>Entre novamente para renovar o acesso do Discord.</p></article>
         ) : null}
+      </section>
+
+      <section className="panel">
+        <p className="eyebrow">Primeiro workflow</p>
+        <h2>Publicar mensagem</h2>
+        {selectedGuild ? (
+          <form action="/dashboard/publish" className="form" method="post">
+            <input name="guildId" type="hidden" value={selectedGuild.id} />
+            <label>Nome<input maxLength={80} minLength={2} name="name" required /></label>
+            <label>ID do canal<input inputMode="numeric" name="channelId" pattern="[0-9]{16,22}" required /></label>
+            <label>Mensagem<textarea maxLength={2000} name="content" required rows={4} /></label>
+            <button className="button" type="submit">Publicar e executar em {selectedGuild.name}</button>
+          </form>
+        ) : <p>Selecione uma guilda para criar o workflow.</p>}
+      </section>
+
+      <section className="split">
+        <div className="panel">
+          <p className="eyebrow">Fila</p>
+          <h2>Execuções solicitadas</h2>
+          {jobs?.map((job) => <p className="row" key={job.id}><span>{job.status}</span><time>{new Date(job.created_at).toLocaleString("pt-BR")}</time></p>)}
+          {!jobs?.length ? <p>Nenhuma tarefa criada.</p> : null}
+        </div>
+        <div className="panel">
+          <p className="eyebrow">Auditoria</p>
+          <h2>Resultados</h2>
+          {logs?.map((log) => <p className="row" key={log.id}><span>{log.status}</span><time>{new Date(log.created_at).toLocaleString("pt-BR")}</time></p>)}
+          {!logs?.length ? <p>Nenhuma execução registrada.</p> : null}
+        </div>
       </section>
     </main>
   );

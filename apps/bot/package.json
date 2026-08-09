@@ -8,8 +8,10 @@
     "test": "node --experimental-strip-types --test test/*.test.ts"
   },
   "dependencies": {
+    "@juicy-guilds/contracts": "workspace:*",
     "@juicy-guilds/db": "workspace:*",
     "@juicy-guilds/studio-engine": "workspace:*",
+    "@supabase/supabase-js": "2.112.2",
     "discord.js": "14.27.0"
   }
 }

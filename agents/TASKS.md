@@ -8,7 +8,7 @@
 - [x] Registrar bases open source escolhidas.
 - [x] Criar checklist por estágio.
 - [x] Escolher e documentar banco de dados e autenticação.
-- [ ] Definir comunicação Web → Bot e modelo de filas.
+- [x] Definir comunicação Web → Bot e modelo de filas.
 - [x] Fixar versões das dependências após prova de conceito.
 
 ## Próximo — Prova de conceito

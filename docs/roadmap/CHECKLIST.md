@@ -24,7 +24,7 @@
 ## Estágio 2 — Prova de conceito vertical
 
 - [x] Login do Discord.
-- [ ] Seleção de guilda.
+- [x] Seleção de guilda.
 - [ ] Canvas com oito tipos de nó.
 - [ ] Salvar e carregar workflow.
 - [ ] Validar grafo.

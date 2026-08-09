@@ -22,3 +22,5 @@ Runtime operacional conectado ao Discord.
 - `pnpm start:bot`: conecta todos os tokens `DISCORD_BOT_<n>_TOKEN` ao Gateway.
 - `pnpm check:bot`: conecta os bots, valida o Supabase e encerra após o smoke test.
 - O runtime concreto executa passos `message` já compilados pelo Studio Engine.
+- Em execução normal, o Bot consome `workflow_jobs` e registra o resultado em
+  `execution_logs`; `BOT_PROCESS_ONCE=true` executa somente um ciclo de teste.

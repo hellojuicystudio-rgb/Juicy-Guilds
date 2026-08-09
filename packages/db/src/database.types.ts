@@ -35,34 +35,124 @@ export type Database = {
         }
         Relationships: []
       }
+      execution_logs: {
+        Row: {
+          bot_user_id: string | null
+          channel_id: string
+          created_at: string
+          error: string | null
+          guild_id: string
+          id: string
+          job_id: string
+          project_id: string
+          requester_id: string
+          status: string
+        }
+        Insert: {
+          bot_user_id?: string | null
+          channel_id: string
+          created_at?: string
+          error?: string | null
+          guild_id: string
+          id?: string
+          job_id: string
+          project_id: string
+          requester_id: string
+          status: string
+        }
+        Update: {
+          bot_user_id?: string | null
+          channel_id?: string
+          created_at?: string
+          error?: string | null
+          guild_id?: string
+          id?: string
+          job_id?: string
+          project_id?: string
+          requester_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "execution_logs_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "workflow_jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "execution_logs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guild_memberships: {
+        Row: {
+          auth_user_id: string
+          guild_id: string
+          guild_name: string
+          is_owner: boolean
+          permissions: string
+          synced_at: string
+        }
+        Insert: {
+          auth_user_id: string
+          guild_id: string
+          guild_name: string
+          is_owner?: boolean
+          permissions: string
+          synced_at?: string
+        }
+        Update: {
+          auth_user_id?: string
+          guild_id?: string
+          guild_name?: string
+          is_owner?: boolean
+          permissions?: string
+          synced_at?: string
+        }
+        Relationships: []
+      }
       projects: {
         Row: {
+          channel_id: string | null
           created_at: string
           definition: Json
           description: string | null
+          guild_id: string | null
           id: string
           name: string
           owner_id: string
+          published_at: string | null
           status: string
           updated_at: string
         }
         Insert: {
+          channel_id?: string | null
           created_at?: string
           definition: Json
           description?: string | null
+          guild_id?: string | null
           id: string
           name: string
           owner_id: string
+          published_at?: string | null
           status?: string
           updated_at?: string
         }
         Update: {
+          channel_id?: string | null
           created_at?: string
           definition?: Json
           description?: string | null
+          guild_id?: string | null
           id?: string
           name?: string
           owner_id?: string
+          published_at?: string | null
           status?: string
           updated_at?: string
         }
@@ -139,6 +229,32 @@ export type Database = {
           },
         ]
       }
+      user_settings: {
+        Row: {
+          auth_user_id: string
+          selected_guild_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          auth_user_id: string
+          selected_guild_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          auth_user_id?: string
+          selected_guild_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_settings_selected_guild_fkey"
+            columns: ["auth_user_id", "selected_guild_id"]
+            isOneToOne: false
+            referencedRelation: "guild_memberships"
+            referencedColumns: ["auth_user_id", "guild_id"]
+          },
+        ]
+      }
       users: {
         Row: {
           access_token: string | null
@@ -174,6 +290,59 @@ export type Database = {
           username?: string
         }
         Relationships: []
+      }
+      workflow_jobs: {
+        Row: {
+          attempts: number
+          channel_id: string
+          claimed_at: string | null
+          completed_at: string | null
+          created_at: string
+          definition: Json
+          guild_id: string
+          id: string
+          last_error: string | null
+          project_id: string
+          requester_id: string
+          status: string
+        }
+        Insert: {
+          attempts?: number
+          channel_id: string
+          claimed_at?: string | null
+          completed_at?: string | null
+          created_at?: string
+          definition: Json
+          guild_id: string
+          id?: string
+          last_error?: string | null
+          project_id: string
+          requester_id: string
+          status?: string
+        }
+        Update: {
+          attempts?: number
+          channel_id?: string
+          claimed_at?: string | null
+          completed_at?: string | null
+          created_at?: string
+          definition?: Json
+          guild_id?: string
+          id?: string
+          last_error?: string | null
+          project_id?: string
+          requester_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_jobs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

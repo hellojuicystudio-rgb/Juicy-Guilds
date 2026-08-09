@@ -1,6 +1,6 @@
 import type { WorkflowDocument } from "@juicy-guilds/contracts";
-import type { ExecutionPlan } from "./model.js";
-import type { NodeRegistry } from "./registry.js";
+import type { ExecutionPlan } from "./model.ts";
+import type { NodeRegistry } from "./registry.ts";
 
 export interface CompileResult {
   errors: string[];
